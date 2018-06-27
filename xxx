@@ -1,0 +1,46 @@
+#
+# extract archives
+#
+
+
+    if [ -f "$1" ]
+        then
+
+		if [ "$2" = "" ]
+			then
+				destdir="."
+		elif [ "$2" = "." ]
+			then
+				destdir="."
+		else
+			if [ -f "$2" ]
+				then
+					destdir="$2"
+			else
+					mkdir "$2"
+					destdir="$2"
+			fi
+		fi
+
+
+            case "$1" in
+                 *.tar.bz2) tar xvjf "$1" -C "$destdir" ;;
+                 *.tar.gz) tar xzvf "$1" -C "$destdir" ;;
+                 *.tar.xz) tar xpvf "$1" -C "$destdir" ;;
+                 *.bz2) bunzip2 -v "$1" -C "$destdir" ;;
+                 *.deb) ar xv "$1" ;;
+                 *.gz) gunzip -v "$1" ;;
+                 *.rar) unrar x "$1" ;;
+                 *.rpm) rpm2cpio -v "$1" | cpio --quiet -i --make-directories ;;
+                 *.tar) tar xfv "$1" -C "$destdir" ;;
+                 *.tbz2) tar xjfv "$1" -C "$destdir" ;;
+                 *.tgz) tar xzfv "$1" -C "$destdir" ;;
+                 *.zip) unzip "$1" ;;
+                 *.z) uncompress -v "$1" ;;
+                 *.7z) 7z x "$1" ;;
+                 *) echo "'$1' cannot be extracted via extract" ;;
+            esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+

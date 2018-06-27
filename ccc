@@ -1,0 +1,85 @@
+#
+# compress
+#
+
+
+    if [ -f "$2" ] || [ -d "$2" ]
+        then
+
+	inp=$2
+	len=${#inp} 
+	slush=${inp:$len - 1:1}
+
+	if [ $slush == '/' ] 
+		then
+		inp=${inp:0:$len - 1}
+	fi
+
+            case "$1" in
+                 tar.bz2) tar cvjf "$inp"."$1" "$2" ;;
+                 tar.gz) tar czvf "$inp"."$1" "$2" ;;
+                 tar.xz) tar cpvf "$inp"."$1" "$2" ;;
+                 bz2) bzip2 -v "$2" ;;
+                 deb) dpkg-deb -b "$2" ;;
+                 gz) gzip -v "$2" ;;
+                 rar) rar a "$inp"."$1" "$2" ;;
+                 rpm) echo "creating rmp file is not implemented yet!!!" ;;
+                 tar) tar cfv "$inp"."$1" "$2" ;;
+                 tbz2) tar cvjf "$2".tar.bz2 "$2" ;;
+                 txz) tar cpvf "$inp".tar.xz "$2" ;;
+                 tgz) tar czvf "$inp".tar.gz "$2" ;;
+                 zip) zip -r "$inp"."$1" "$2" ;;
+                 z) echo "creating z file is not implemented yet!!!" ;;
+                 7z) 7z a "$inp"."$1" "$2" ;;
+                 .tar.bz2) tar cvjf "$inp""$1" "$2" ;;
+                 .tar.gz) tar czvf "$inp""$1" "$2" ;;
+                 .tar.xz) tar cpvf "$inp""$1" "$2" ;;
+                 .bz2) bzip2 -v "$2" ;;
+                 .deb) dpkg-deb -b "$2" ;;
+                 .gz) gzip -v "$2" ;;
+                 .rar) rar a "$inp""$1" "$2" ;;
+                 .rpm) echo "creating rmp file is not implemented yet!!!" ;;
+                 .tar) tar cfv "$inp""$1" "$2" ;;
+                 .zip) zip -r "$inp""$1" "$2" ;;
+                 .z) echo "creating z file is not implemented yet!!!" ;;
+                 .7z) 7z a "$inp""$1" "$2" ;;
+                 *) echo "ERROR: unrecognized compressing type: '$1'" 
+			echo "available compressing types are:" 
+			echo "	tar.bz2	(tbz2)" 
+			echo "	tar.gz	(tgz)"
+			echo "	tar.xz	(txz)"
+			echo "	bz2"
+			echo "	deb"
+			echo "	gz"
+			echo "	rar"
+			echo "	rpm	(not implemented yet...)"
+			echo "	tar"
+			echo "	tar.bz2"
+			echo "	zip"
+			echo "	z	(not implemented yet...)"
+			echo "	7z"
+			;;
+        esac
+    else
+        echo "ERROR: '$2' is not a valid file or directory"
+	echo "Usage:"
+	echo ""
+	echo "ccc <compressing_type> <input_file_or_directory>"
+	echo ""
+	echo "available compressing types are:" 
+	echo "	tar.bz2	(tbz2)" 
+	echo "	tar.gz	(tgz)"
+	echo "	tar.xz	(txz)"
+	echo "	bz2"
+	echo "	deb"
+	echo "	gz"
+	echo "	rar"
+	echo "	rpm	(not implemented yet...)"
+	echo "	tar"
+	echo "	tar.bz2"
+	echo "	zip"
+	echo "	z	(not implemented yet...)"
+	echo "	7z"
+    fi
+
+
